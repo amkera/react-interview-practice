@@ -1,25 +1,48 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useEffect } from "react"
+import axios from "axios"
+const URL = "https://randomuser.me/api"
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+const fetchRandomData = () => {
+  return axios
+    .get(URL)
+    .then(({ data }) => {
+      return data
+    })
+    .catch((error) => {
+      console.log(error)
+    })
 }
 
-export default App;
+const getFullUserName = (userInfo) => {
+  const {
+    name: { first, last },
+  } = userInfo
+  return `${first} ${last}`
+}
+
+const App = () => {
+  const [randomUserDataJSON, setRandomUserDataJSON] = React.useState("")
+  const [userInfos, setUserInfos] = React.useState([])
+
+  useEffect(() => {
+    fetchRandomData().then((randomData) => {
+      setRandomUserDataJSON(randomData || "N/A")
+
+      setUserInfos(randomData.results)
+    })
+  }, [])
+
+  return (
+    <div>
+      <p>hi</p>
+      {userInfos.map((userInfo, idx) => (
+        <div key={idx}>
+          <p>{getFullUserName(userInfo)}</p>
+          <img alt="user" src={userInfo.picture.thumbnail} />
+        </div>
+      ))}
+    </div>
+  )
+}
+
+export default App
