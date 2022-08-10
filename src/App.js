@@ -25,15 +25,6 @@ const App = () => {
   const [nextPageNumber, setNextPageNumber] = React.useState(1)
   const [userInfos, setUserInfos] = React.useState([])
 
-  // useEffect(() => {
-  //   fetchRandomData().then((randomData) => {
-  //     setRandomUserDataJSON(randomData || "N/A")
-
-  //     setUserInfos(randomData.results)
-  //     setNextPageNumber(randomData.info.page + 1)
-  //   })
-  // }, [])
-
   const fetchNextUser = () => {
     fetchRandomData().then((randomData) => {
       if (randomData === undefined) return
