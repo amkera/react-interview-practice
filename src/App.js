@@ -1,5 +1,6 @@
 import React, { useEffect } from "react"
 import axios from "axios"
+import Tweets from "./Tweets"
 const URL = "https://randomuser.me/api"
 
 const fetchRandomData = (pageNumber) => {
@@ -24,6 +25,7 @@ const App = () => {
   const [randomUserDataJSON, setRandomUserDataJSON] = React.useState("")
   const [nextPageNumber, setNextPageNumber] = React.useState(1)
   const [userInfos, setUserInfos] = React.useState([])
+  const [toggle, setToggle] = React.useState(false)
 
   const fetchNextUser = () => {
     fetchRandomData().then((randomData) => {
@@ -36,12 +38,20 @@ const App = () => {
     })
   }
 
+  const toggler = () => {
+    setToggle((previousState) => !previousState)
+  }
+
   useEffect(() => {
     fetchNextUser()
   }, [])
 
   return (
     <div>
+      <Tweets />
+
+      <h1 className={toggle ? "active" : ""}>TOGGLE</h1>
+      <button onClick={toggler}>Toggle</button>
       <button onClick={() => fetchNextUser()}>Fetch Next User</button>
       <p>hi</p>
       {userInfos.map((userInfo, idx) => (
