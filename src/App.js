@@ -1,6 +1,7 @@
 import React, { useEffect } from "react"
 import axios from "axios"
 import Tweets from "./Tweets"
+import Form from "./Form"
 const URL = "https://randomuser.me/api"
 
 const fetchRandomData = (pageNumber) => {
@@ -60,6 +61,8 @@ const App = () => {
           <img alt="user" src={userInfo.picture.thumbnail} />
         </div>
       ))}
+      <br />
+      <Form />
     </div>
   )
 }
